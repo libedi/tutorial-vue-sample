@@ -1,0 +1,52 @@
+<html>
+    <head>
+        <title>Vue 인스턴스</title>
+    </head>
+    <body>
+        <h1>Vue 인스턴스</h1>
+        <ul>
+            <li>Vue 인스턴스: Vue 함수로 생성 => <code>var vm = new Vue( { ... } )</code></li>
+            <li>속성과 메소드:
+                <ol>
+                    <li>Vue 인스턴스는 data 객체에 있는 모든 속성을 <strong>프록시</strong>처리 => reference 와 유사한 의미</li>
+                    <li>data에 있는 속성들은 인스턴스가 생성될 때 존재한 것들만 반응형! => 이미 생성된 인스턴스에 새 속성을 추가하면 그 데이터가 변해도 화면이 갱신되지 않음.</li>
+                    <li>
+                        따라서, 반응형이 필요한 데이터 항목은 인스턴스 생성시 기본값으로 추가되어야 함.
+                        <pre>
+data: {
+    newTodoText: '',
+    visitCount: 0,
+    hideCompletedTodos: false,
+    todos: [],
+    error: null
+}
+                        </pre>
+                    </li>
+                    <li>
+                        Object.freeze() 는 기존 속성이 변경되는 것을 막음 => 반응성 시스템이 추적하지 못하게 함.<br>
+                        <!-- Object.freeze() 테스트 -->
+                        <div id="app-1">
+                            <p>{{ foo }}</p>
+                            <!-- obj.foo는 더이상 변하지 않습니다! -->
+                            <!-- app1.foo도 변하지 않는다... 왜??? -->
+                            <button v-on:click="foo = 'baz'">Change it</button>
+                        </div>
+                    </li>
+                </ol>
+            </li>
+        </ul>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script>
+            // Object.freeze() 테스트
+            var obj = {
+                foo: 'bar'
+            };
+            Object.freeze(obj);
+            var app1 = new Vue({
+                el: '#app-1',
+                data: obj
+            });
+        </script>
+    </body>
+</html>
