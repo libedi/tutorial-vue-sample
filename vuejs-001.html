@@ -1,0 +1,101 @@
+<html>
+    <head></head>
+    <body>
+        <!-- 선언적 렌더링 -->
+        <div id="app">
+            {{message}}
+        </div>
+
+        <!-- 디렉티브 -->
+        <div id="app-2">
+            <span v-bind:title="message">
+                여기를 터치하면 타이틀이 보여요.
+            </span>
+        </div>
+
+        <!-- 조건문과 반복문 -->
+        <div id="app-3">
+            <p v-if="seen">이제 나를 볼 수 있어요.</p>
+        </div>
+        
+        <div id="app-4">
+            <ol>
+                <li v-for="todo in todos">
+                    {{todo.text}}
+                </li>
+            </ol>
+        </div>
+
+        <!-- 사용자 입력 핸들링 : v-on:sth-event (이벤트 리스너 등록) -->
+        <div id="app-5">
+            <p>{{message}}</p>
+            <button v-on:click="reverseMessage">메시지 뒤집기</button>
+        </div>
+
+        <!-- 사용자 입력 핸들링 : v-model (form과 app 사이의 데이터 양방향 바인딩) -->
+        <div id="app-6">
+            <p>{{message}}</p>
+            <input v-model="message">
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script>
+            // 선언적 렌더링
+            var app = new Vue({
+                el : "#app",
+                data : {
+                    message : "Hello World!"
+                }
+            });
+
+            // 디렉티브
+            var app2 = new Vue({
+                el : "#app-2",
+                data : {
+                    message : "TEST " + new Date()
+                }
+            });
+
+            // 조건문과 반복문
+            var app3 = new Vue({
+                el : "#app-3",
+                data : {
+                    seen : true
+                }
+            });
+
+            // 추가 : app4.todos.push({ text: 'New item' }), 변경 : app4.todos = otherTodos
+            var app4 = new Vue({
+                el : "#app-4",
+                data : {
+                    todos : [
+                        {text : "Learnging Javascript"},
+                        {text : "Learnging Vue"},
+                        {text : "Creating application"}
+                    ]
+                }
+            });
+
+            // 사용자 입력 핸들링 : v-on:sth-event (이벤트 리스너 등록)
+            var app5 = new Vue({
+               el : "#app-5",
+               data : {
+                   message : "Hello Vuejs!"
+               },
+               methods : {
+                   reverseMessage : function() {
+                       this.message = this.message.split('').reverse().join('')
+                   }
+               }
+            });
+
+            // 사용자 입력 핸들링 : v-model (form과 app 사이의 데이터 양방향 바인딩)
+            var app6 = new Vue({
+                el : "#app-6",
+                data : {
+                    message : "Hello Vuejs!"
+                }
+            });
+        </script>
+    </body>
+</html>
