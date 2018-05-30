@@ -1,12 +1,15 @@
 <html>
     <head></head>
     <body>
+        <h1>Vue 시작하기</h1>
         <!-- 선언적 렌더링 -->
+        <h3>선언적 렌더링</h3>
         <div id="app">
             {{message}}
         </div>
 
         <!-- 디렉티브 -->
+        <h3>디렉티브</h3>
         <div id="app-2">
             <span v-bind:title="message">
                 여기를 터치하면 타이틀이 보여요.
@@ -14,6 +17,7 @@
         </div>
 
         <!-- 조건문과 반복문 -->
+        <h3>조건문과 반복문</h3>
         <div id="app-3">
             <p v-if="seen">이제 나를 볼 수 있어요.</p>
         </div>
@@ -27,15 +31,34 @@
         </div>
 
         <!-- 사용자 입력 핸들링 : v-on:sth-event (이벤트 리스너 등록) -->
+        <h3> 사용자 입력 핸들링 : v-on:sth-event (이벤트 리스너 등록)</h3>
         <div id="app-5">
             <p>{{message}}</p>
             <button v-on:click="reverseMessage">메시지 뒤집기</button>
         </div>
 
         <!-- 사용자 입력 핸들링 : v-model (form과 app 사이의 데이터 양방향 바인딩) -->
+        <h3>사용자 입력 핸들링 : v-model (form과 app 사이의 데이터 양방향 바인딩)</h3>
         <div id="app-6">
             <p>{{message}}</p>
             <input v-model="message">
+        </div>
+
+        <!-- 컴포넌트를 사용한 작성방법 : Vue.component('컴포넌트명', { props : ['프로퍼티명', ...], template : '컴포넌트에서 사용할 template 코드' }) -->
+        <h3>컴포넌트를 사용한 작성방법 : Vue.component('컴포넌트명', { props : ['프로퍼티명', ...], template : '컴포넌트에서 사용할 template 코드' })</h3>
+        <div id="app-7">
+            <ol>
+                <!--
+                    이제 각 todo-item 에 todo 객체를 제공합니다.
+                    화면에 나오므로, 각 항목의 컨텐츠는 동적으로 바뀔 수 있습니다.
+                    또한 각 구성 요소에 "키"를 제공해야 합니다.
+                -->
+                <todo-item
+                    v-for="item in groceryList"
+                    v-bind:todo="item"
+                    v-bind:key="item.id">
+                </todo-item>
+            </ol>
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
@@ -94,6 +117,23 @@
                 el : "#app-6",
                 data : {
                     message : "Hello Vuejs!"
+                }
+            });
+
+            // 컴포넌트를 사용한 작성방법 : Vue.component('컴포넌트명', { props : ['프로퍼티명', ...], template : '컴포넌트에서 사용할 template 코드' })
+            // 참고문서 : WebComponentsSpec#CustomerElements (https://developers.google.com/web/fundamentals/web-components/customelements)
+            Vue.component('todo-item', {
+                props : ['todo'],
+                template : '<li>{{todo.text}}</li>'
+            });
+            var app7 = new Vue({
+                el : '#app-7',
+                data : {
+                    groceryList : [
+                        { id: 0, text: 'Vegetable' },
+                        { id: 1, text: 'Cheese' },
+                        { id: 2, text: 'Whatever else humans are supposed to eat' }
+                    ]
                 }
             });
         </script>
